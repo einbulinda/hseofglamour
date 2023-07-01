@@ -5,10 +5,7 @@ import React, { useEffect, useState } from "react";
 
 const DarkModeSwitch = () => {
   const [mounted, setMounted] = useState(false);
-  const { systemTheme, theme, setTheme } = useTheme();
-  const darkMode = theme === "dark";
-
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -31,8 +28,8 @@ const DarkModeSwitch = () => {
             "border w-[38px] h-[24px] p-px outline-none rounded-full relative cursor-pointer",
             "before:content-[''] before:w-[22px] before:h-[22px] before:transition-all before:duration-200 before:shadow-[1px_1px_3px_rgba(0,0,0,0.25)] before:absolute before:inset-y-0 before:my-auto before:rounded-full",
             {
-              "bg-primary border-primary": darkMode,
-              "before:ml-[13px] before:bg-white": darkMode,
+              "bg-primary border-primary": theme === "dark",
+              "before:ml-[13px] before:bg-white": theme === "dark",
             },
           ])}
         ></div>

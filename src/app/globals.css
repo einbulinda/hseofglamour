@@ -24,7 +24,8 @@
    | Import 3rd party library CSS files.
    |
    */
-/* @import "simplebar/src/simplebar.css";
+@import "simplebar/dist/simplebar.css";
+/* 
 @import "dropzone/dist/dropzone.css";
 @import "tabulator-tables/dist/css/tabulator.css";
 @import "tom-select/dist/css/tom-select.css";
