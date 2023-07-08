@@ -2,6 +2,8 @@ import { parseColor } from "tailwindcss/lib/util/color";
 
 const toRGB = (value) => parseColor(value).color.join(" ");
 
+const toRaw = (obj) => JSON.parse(JSON.stringify(obj));
+
 const slideUp = (el, duration, callback = (el) => {}) => {
   el.style.transitionProperty = "height, margin, padding";
   el.style.transitionDuration = duration + "ms";
@@ -56,4 +58,4 @@ const slideDown = (el, duration, callback = (el) => {}) => {
   }, duration);
 };
 
-export { toRGB, slideDown, slideUp };
+export { toRGB, toRaw, slideDown, slideUp };
