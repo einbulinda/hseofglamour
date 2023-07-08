@@ -1,11 +1,11 @@
 import DarkModeSwitch from "@/components/DarkModeSwitch";
 import "./globals.css";
 import Providers from "./Providers";
-import MobileMenu from "@/components/MobileMenu";
-import Topbar from "@/components/Topbar";
+import MobileMenu from "@/components/navigation/MobileMenu";
+import Topbar from "@/components/navigation/Topbar";
 import clsx from "clsx";
-import Link from "next/link";
 import { Roboto } from "next/font/google";
+import SideNavMenu from "@/components/navigation/SideNavMenu";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={roboto.className}>
         <Providers>
           <div className="py-5 md:py-0 px-3 bg-black/[0.15] dark:bg-transparent">
@@ -28,17 +28,8 @@ export default function RootLayout({ children }) {
             <MobileMenu />
 
             <div className="flex mt-[4.7rem] md:mt-0 overflow-hidden">
-              {/* BEGIN: Side Menu @einbulinda_28.06.2023 */}
-              <nav className="hidden md:block md:w-[105px] xl:w-[250px] px-5 pb-16 overflow-x-hidden z-10">
-                <Link href="#">
-                  <span className="hidden ml-3 text-lg text-white xl:block">
-                    House of Gla
-                  </span>
-                </Link>
+              <SideNavMenu />
 
-                <Divider type="div" className="my-6"></Divider>
-              </nav>
-              {/* END: Side Menu */}
               {/* BEGIN:Content */}
               <div
                 className={clsx([
@@ -55,20 +46,5 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
-  );
-}
-
-function Divider(props) {
-  const { className, ...computedProps } = props;
-  const Component = props.as || "div";
-
-  return (
-    <Component
-      {...computedProps}
-      className={clsx([
-        props.className,
-        "w-full h-px bg-white/[0.08] z-10 relative dark:bg-white/[0.07]",
-      ])}
-    ></Component>
   );
 }

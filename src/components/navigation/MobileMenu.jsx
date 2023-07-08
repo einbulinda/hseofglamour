@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { createRef, useEffect, useState } from "react";
-import HOGLogo from "./HOGLogo";
+import HOGLogo from "../HOGLogo";
 import Lucide from "@/base-components/Lucide";
 import clsx from "clsx";
 import SimpleBar from "simplebar";
