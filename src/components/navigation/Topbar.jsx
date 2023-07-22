@@ -3,17 +3,23 @@ import Breadcrumb from "@/base-components/Breadcrumb";
 import Lucide from "@/base-components/Lucide";
 import FormInput from "@/base-components/Form/FormInput";
 import Link from "next/link";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import Popover from "@/base-components/Headless/Popover";
 import Menu from "@/base-components/Headless/Menu";
 import Image from "next/image";
-import { menus } from "@/lib";
+import { menus } from "@/lib/menus";
+import supabase from "@/lib/supabase-browser";
+import { useAuth } from "../AuthProvider";
 
-const Topbar = () => {
+const Topbar = async () => {
+  const { signOut } = useAuth();
   const [searchDropdown, setSearchDropdown] = useState(false);
   const showSearchDropdown = () => setSearchDropdown(true);
   const hideSearchDropdown = () => setSearchDropdown(false);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <>
@@ -100,9 +106,9 @@ const Topbar = () => {
           <Menu.Items className="w-56 mt-px text-white bg-primary">
             <Menu.Header className="font-normal">
               {/*!!! Use data from DB for logged in user */}
-              <div className="font-medium">Einstein Bulinda</div>
+              <div className="font-medium">{user?.name ? user.name : null}</div>
               <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                Job Title
+                {user?.email}
               </div>
             </Menu.Header>
             <Menu.Divider className="bg-white/[0.08]" />
@@ -110,10 +116,14 @@ const Topbar = () => {
             {/* The menu items to be transformed to links to related pages */}
             {menus.userProfile.map((item) => (
               <Menu.Item key={item.id} className="hover:bg-white/5">
-                <Lucide icon={item.icon} className="w-4 h-4 mr-2" />{" "}
+                <Lucide icon={item.icon} className="w-4 h-4 mr-2" />
                 {item.label}
               </Menu.Item>
             ))}
+            <Menu.Item className="hover:bg-white/5" onClick={() => signOut}>
+              <Lucide icon="Power" className="w-4 h-4 mr-2" />
+              Logout
+            </Menu.Item>
           </Menu.Items>
         </Menu>
         {/* END:Account Menu */}

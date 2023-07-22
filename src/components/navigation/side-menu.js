@@ -2,22 +2,19 @@ import { slideDown, slideUp } from "@/utils/helper";
 
 // Setup side menu
 const findActiveMenu = (subMenu, location) => {
-  let match = false;
-
-  subMenu.forEach((item) => {
+  for (let i = 0; i < subMenu.length; i++) {
+    const item = subMenu[i];
     if (location.startsWith(item.pathname) && !item.ignore) {
-      match = true;
-    } else if (!match && item.subMenu) {
-      match = findActiveMenu(item.subMenu, location);
+      return true;
+    } else if (item.subMenu && findActiveMenu(item.subMenu, location)) {
+      return true;
     }
-  });
+  }
   return match;
 };
 
 const nestedMenu = (menu, location) => {
-  const formattedMenu = [];
-
-  menu.forEach((item) => {
+  const formattedMenu = menu.map((item) => {
     if (typeof item !== "string") {
       const menuItem = {
         icon: item.icon,
@@ -42,9 +39,9 @@ const nestedMenu = (menu, location) => {
         );
         menuItem.subMenu = subMenu;
       }
-      formattedMenu.push(menuItem);
+      return menuItem;
     } else {
-      formattedMenu.push(item);
+      return item;
     }
   });
   return formattedMenu;

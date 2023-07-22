@@ -4,22 +4,22 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import HOGLogo from "../HOGLogo";
 import { enter, leave, nestedMenu, linkTo } from "./side-menu";
-import { menus } from "@/lib";
 import { usePathname, useRouter } from "next/navigation"; //importing from next/router will cause error on mounting
 import SideMenuTooltip from "./SideMenuTooltip";
 import Lucide from "@/base-components/Lucide";
 import { Transition } from "react-transition-group";
+import menus from "@/lib/menus";
 
 const SideNavMenu = () => {
+  const { sideMenu } = menus;
   const [formattedMenu, setFormattedMenu] = useState([]);
   const pathname = usePathname();
-
-  const sideMenu = () => nestedMenu(menus.sideMenu, pathname);
+  const rawMenu = () => nestedMenu(sideMenu, pathname);
 
   useEffect(() => {
-    setFormattedMenu(sideMenu());
+    setFormattedMenu(rawMenu());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menus]);
+  }, [sideMenu]);
 
   return (
     <nav className="hidden md:block md:w-[105px] xl:w-[250px] px-5 pb-16 overflow-x-hidden z-10">

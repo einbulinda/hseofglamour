@@ -11,8 +11,9 @@ const HOGLogo = (props) => {
   if (width && height) {
     return (
       <Image
+        priority={true}
         src="/hseofgla.svg"
-        alt="House of Glamour brand logo"
+        alt="House of Glamour logo"
         width={width}
         height={height}
         {...props}
@@ -21,8 +22,9 @@ const HOGLogo = (props) => {
   } else if (width) {
     return (
       <Image
+        priority={true}
         src="/hseofgla.svg"
-        alt="House of Glamour brand logo"
+        alt="House of Glamour logo"
         width={width}
         height={width / ratio}
         {...props}
@@ -31,8 +33,9 @@ const HOGLogo = (props) => {
   } else {
     return (
       <Image
+        priority={true}
         src="/hseofgla.svg"
-        alt="House of Glamour brand logo"
+        alt="House of Glamour logo"
         width={height * ratio}
         height={height}
         {...props}
