@@ -40,7 +40,7 @@ export default async function RootLayout({ children }) {
               <MobileMenu />
 
               <div className="flex mt-[4.7rem] md:mt-0 overflow-hidden">
-                <SideNavMenu />
+                {/* <SideNavMenu /> */}
 
                 {/* BEGIN:Content */}
                 <div
@@ -50,7 +50,7 @@ export default async function RootLayout({ children }) {
                     "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ml-4 after:dark:bg-darkmode-400/50",
                   ])}
                 >
-                  <Topbar session={session} />
+                  <Topbar />
                   {children}
                 </div>
               </div>

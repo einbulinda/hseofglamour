@@ -7,15 +7,16 @@ import Lucide from "@/base-components/Lucide";
 import clsx from "clsx";
 import SimpleBar from "simplebar";
 import { toRaw } from "@/utils/helper";
-import { menus } from "@/lib/menus";
+import menus from "@/lib/menus";
 import { enter, leave, linkTo, nestedMenu } from "./side-menu";
 import { Transition } from "react-transition-group";
 
 const MobileMenu = () => {
+  const { sideMenu } = menus;
   const pathname = usePathname();
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [formattedMenu, setFormattedMenu] = useState([]);
-  const mobileMenu = () => nestedMenu(toRaw(menus.sideMenu), pathname);
+  const mobileMenu = () => nestedMenu(toRaw(sideMenu), pathname);
   const scrollableRef = createRef();
 
   useEffect(() => {

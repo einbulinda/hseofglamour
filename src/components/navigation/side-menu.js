@@ -10,7 +10,6 @@ const findActiveMenu = (subMenu, location) => {
       return true;
     }
   }
-  return match;
 };
 
 const nestedMenu = (menu, location) => {
