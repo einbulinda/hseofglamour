@@ -1,7 +1,7 @@
-import React from "react";
-import Providers from "../Providers";
 import { Roboto } from "next/font/google";
-import "../globals.css";
+import DarkModeSwitch from "@/components/DarkModeSwitch";
+import "./globals.css";
+import Providers from "./Providers";
 import { AuthProvider } from "@/components/AuthProvider";
 import createClient from "@/lib/supabase-server";
 
@@ -12,12 +12,13 @@ const roboto = Roboto({
 
 export const metadata = {
   title: "House of Glamour :: Admin",
-  description: "Admin application for House of Glamour Ecommerce site.",
+  description:
+    "Admin application for House of Glamour retail business in Kenya",
 };
 
 export const revalidate = 0; //Not to cache this layout
 
-export default async function RootLayout({ children }) {
+const RootLayout = async ({ children }) => {
   const supabase = createClient();
   const {
     data: { session },
@@ -28,10 +29,17 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={roboto.className}>
-        <AuthProvider accessToken={accessToken}>
-          <Providers>{children}</Providers>
-        </AuthProvider>
+        <Providers>
+          <AuthProvider accessToken={accessToken}>
+            <div className="py-5 md:py-0 px-3 bg-black/[0.15] dark:bg-transparent">
+              <DarkModeSwitch />
+              {children}
+            </div>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

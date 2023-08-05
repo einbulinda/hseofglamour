@@ -10,10 +10,10 @@ const sideMenu = [
     icon: "Package2",
     title: "Products",
     subMenu: [
-      { icon: "Zap", pathname: "/products-list", title: "Product List" },
+      { icon: "Zap", pathname: "/products", title: "Product List" },
       {
         icon: "GalleryHorizontalEnd",
-        pathname: "/products-images",
+        pathname: "/products/images",
         title: "Product Images",
       },
     ],

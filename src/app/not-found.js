@@ -1,8 +1,6 @@
-"use client";
 import Button from "@/base-components/Button";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 function NotFound() {
   return (
@@ -28,9 +26,11 @@ function NotFound() {
             <div className="mt-3 text-lg intro-x">
               You may have mistyped the address or the page may have been moved.
             </div>
-            <Button className="px-4 py-3 mt-10 text-white border-white intro-x dark:border-darkmode-400 dark:text-slate-200">
-              <Link href="/">Back to Home</Link>
-            </Button>
+            <Link href="/">
+              <Button className="px-4 py-3 mt-10 text-white border-white intro-x dark:border-darkmode-400 dark:text-slate-200">
+                Back to Home
+              </Button>
+            </Link>
           </div>
         </div>
         {/* END:Error Page */}
