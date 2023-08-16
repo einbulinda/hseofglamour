@@ -8,5 +8,16 @@
     "preinstall",
     "simplebar",
     "toastify"
+  ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "db.qzqyvkyronosctcjqqvd.supabase.co",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "hseofglamour",
+      "database": "postgres",
+      "username": "postgres"
+    }
   ]
 }
