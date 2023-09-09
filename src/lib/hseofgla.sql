@@ -1,5 +1,5 @@
 CREATE TABLE products (
-  id integer PRIMARY KEY NOT NULL,
+  id serial PRIMARY KEY NOT NULL,
   name varchar UNIQUE NOT NULL,
   description varchar,
   category_id integer,
@@ -8,21 +8,21 @@ CREATE TABLE products (
   updated_date timestamp
 );
 CREATE TABLE categories (
-  id int PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   is_active bool DEFAULT True,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
 CREATE TABLE subcategory (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   category_id integer,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
 CREATE TABLE attributes (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
@@ -35,13 +35,13 @@ CREATE TABLE product_attribute (
   updated_date timestamp
 );
 CREATE TABLE size (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
 CREATE TABLE color (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
@@ -60,7 +60,7 @@ CREATE TABLE inventories (
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
-CREATE TABLE profiles (
+CREATE TABLE IF NOT EXISTS profiles (
   id uuid not null,
   updated_at timestamp with time zone null,
   username text null,
@@ -77,19 +77,19 @@ CREATE TABLE profiles (
   constraint username_length check ((char_length(username) >= 3))
 ) tablespace pg_default;
 CREATE TABLE order_status (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
 CREATE TABLE payment_modes (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar UNIQUE NOT NULL,
   created_date timestamp DEFAULT now(),
   updated_date timestamp
 );
 CREATE TABLE orders (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   customer_id uuid,
   order_date timestamp,
   total_amount decimal,
@@ -99,7 +99,7 @@ CREATE TABLE orders (
   updated_date timestamp
 );
 CREATE TABLE order_items (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   product_id integer,
   attr_combination varchar,
   quantity integer,
@@ -108,7 +108,7 @@ CREATE TABLE order_items (
   updated_date timestamp
 );
 CREATE TABLE payments (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   order_id integer,
   payment_date timestamp,
   payment_amount decimal,
@@ -117,7 +117,7 @@ CREATE TABLE payments (
   updated_date timestamp
 );
 CREATE TABLE ratings (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   product_id integer,
   customer_id uuid,
   rating decimal,
@@ -127,7 +127,7 @@ CREATE TABLE ratings (
   updated_date timestamp
 );
 CREATE TABLE discounts (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   product_id integer,
   rate decimal,
   expires_on timestamp,
@@ -142,7 +142,7 @@ CREATE TABLE disc_product_combination (
   updated_date timestamp
 );
 CREATE TABLE images (
-  id integer PRIMARY KEY,
+  id serial PRIMARY KEY,
   product_id integer,
   url varchar,
   created_date timestamp DEFAULT now(),

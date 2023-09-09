@@ -58,4 +58,11 @@ const slideDown = (el, duration, callback = (el) => {}) => {
   }, duration);
 };
 
-export { toRGB, toRaw, slideDown, slideUp };
+const generateSlug = (str) =>
+  str
+    .replace(/[^\w\s-]/g, "") // remove special characters
+    .trim() // trim leading and trailing spaces
+    .replace(/\s+/g, "-") //replace space with dashes
+    .toLowerCase(); //convert to lowercase
+
+export { toRGB, toRaw, slideDown, slideUp, generateSlug };

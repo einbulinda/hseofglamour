@@ -11,12 +11,14 @@
    |
    */
 @import "simplebar/dist/simplebar.css";
+@import "tom-select/dist/css/tom-select.css";
+/* @import "toastify-js/src/toastify.css"; */
 /* 
 @import "dropzone/dist/dropzone.css";
 @import "tabulator-tables/dist/css/tabulator.css";
-@import "tom-select/dist/css/tom-select.css";
+
 @import "zoom-vanilla.js/dist/zoom.css";
-@import "toastify-js/src/toastify.css";
+
 @import "highlight.js/styles/github.css";
 */
 @import "tippy.js/dist/tippy.css";

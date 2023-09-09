@@ -1,5 +1,4 @@
 "use client";
-
 import { useAuth, VIEWS } from "src/components/AuthProvider";
 import ResetPassword from "./ResetPassword";
 import SignIn from "./SignIn";

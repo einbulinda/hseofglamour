@@ -3,6 +3,7 @@ import Button from "@/base-components/Button";
 import { FormInput } from "@/base-components/Form";
 import Menu from "@/base-components/Headless/Menu";
 import Lucide from "@/base-components/Lucide";
+import Table from "@/base-components/Table";
 
 const ProductsList = () => {
   return (
@@ -60,7 +61,9 @@ const ProductsList = () => {
 
         {/* BEGIN: Data List */}
         <div className="col-span-12 overflow-auto intro-y lg:overflow-visible">
-          List
+          <Table>
+            <Table.Thead></Table.Thead>
+          </Table>
         </div>
         {/* END: Data List */}
       </div>
