@@ -65,6 +65,8 @@ const AddCategory = () => {
     formik.setFieldValue("categoryImages", updatedCategoryImages);
   };
 
+  // Saving a Category
+
   const formik = useFormik({
     initialValues: {
       categoryImages: [],
@@ -78,25 +80,29 @@ const AddCategory = () => {
 
       try {
         // Upload Images to Supabase Storage
-        const imageUrls = [];
-        for (const image of values.categoryImages) {
-          const { data, error } = await supabase.storage
-            .from("images")
-            .upload(`category_images/${image.name}`, image);
 
-          if (error) {
-            console.log(error);
-            throw new Error("Error uploading image.");
-          }
+        const imageUrls = await Promise.all(
+          values.categoryImages?.map(async (image) => {
+            const { data, error } = await supabase.storage
+              .from("images")
+              .upload(`category_images/${image.name}`, image);
 
-          console.log(data);
-          // Store the public URL of the stored image
-          imageUrls.push(data.path);
-        }
+            if (error) {
+              console.log(error);
+              throw new Error("Error uploading image.");
+            }
 
-        console.log(imageUrls);
+            // Construct the Public URL from path
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from("images").getPublicUrl(data.path);
+
+            return publicUrl;
+          })
+        );
 
         // ACTION: Resolve the issue of code saving an empty array to categories table instead of array from path for bucket images. (09.09.2023)
+        // RESOLVED: Added Promise.all to saving of the images to bucket for the second insert to DB to wait for the promises to be fulfilled first.
 
         // Save the categories details
         const { data: categoryData, error: categoryError } = await supabase
@@ -214,10 +220,10 @@ const AddCategory = () => {
                         multiple
                         accept="image/*"
                         onChange={(event) => {
-                          formik.setFieldValue(
-                            "categoryImages",
+                          const filesArray = Array.from(
                             event.currentTarget.files
                           );
+                          formik.setFieldValue("categoryImages", filesArray);
                           handleImagePreview(event);
                         }}
                         className="absolute top-0 left-0 w-full h-full opacity-0"
