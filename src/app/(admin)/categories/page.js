@@ -24,7 +24,9 @@ const CategoriesList = () => {
   const deleteButtonRef = useRef(null);
 
   useEffect(() => {
-    fetchCategories().then((data) => setCategories(data));
+    fetchCategories()
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
   }, []);
   return (
     <>
@@ -134,7 +136,7 @@ const CategoriesList = () => {
                       className="flex items-center mr-3 text-slate-500"
                     >
                       <Lucide icon="ExternalLink" className="w-4 h-4 mr-2" />
-                      {`/categories/${category.name.toLowerCase()}`}
+                      {category.slug}
                     </Link>
                   </TableData>
                   <TableData className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
