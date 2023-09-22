@@ -9,7 +9,6 @@ export async function fetchCategories() {
   if (error) {
     console.log(error);
   } else {
-    console.log(data);
     return data;
   }
 }

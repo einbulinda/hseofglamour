@@ -65,4 +65,20 @@ const generateSlug = (str) =>
     .replace(/\s+/g, "-") //replace space with dashes
     .toLowerCase(); //convert to lowercase
 
-export { toRGB, toRaw, slideDown, slideUp, generateSlug };
+const isArrayWithElements = (data) => {
+  if (data !== null) {
+    if (Array.isArray(data)) {
+      if (data.length) {
+        return true;
+      } else {
+        return false; //Empty array data
+      }
+    } else {
+      return false; //Not an array
+    }
+  } else {
+    return false;
+  }
+};
+
+export { toRGB, toRaw, slideDown, slideUp, generateSlug, isArrayWithElements };

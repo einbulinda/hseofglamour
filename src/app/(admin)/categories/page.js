@@ -14,6 +14,7 @@ import {
 } from "@/base-components/Table";
 import Tippy from "@/base-components/Tippy";
 import { fetchCategories } from "@/lib/db";
+import { isArrayWithElements } from "@/utils/helper";
 import clsx from "clsx";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -102,24 +103,37 @@ const CategoriesList = () => {
                 <TableRow key={category.id} className="intro-x">
                   <TableData className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                     <div className="flex">
-                      <div className="w-10 h-10 image-fit zoom-in">
-                        <Tippy
-                          as="img"
-                          alt={categories.name}
-                          src="/rsz_400dpilogo-black.png"
-                          content="date"
-                          className="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                        />
-                      </div>
-                      <div className="w-10 h-10 -ml-5 image-fit zoom-in">
-                        <Tippy
-                          as="img"
-                          alt={categories.name}
-                          src="/rsz_400dpilogo.jpg"
-                          content="date"
-                          className="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                        />
-                      </div>
+                      {isArrayWithElements(category.image_urls) ? (
+                        category.image_urls.map((imageUrl, index) => {
+                          console.log(imageUrl);
+                          return (
+                            <div
+                              key={index}
+                              className="w-10 h-10 image-fit zoom-in"
+                            >
+                              <Tippy
+                                as="img"
+                                alt={imageUrl}
+                                // alt={imageUrl.substring(
+                                //   imageUrl.lastIndexOf("/") + 1
+                                // )}
+                                src={imageUrl}
+                                className="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
+                              />
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="w-10 h-10 image-fit zoom-in">
+                          <Tippy
+                            as="img"
+                            alt={category.name}
+                            src="/rsz_400dpilogo-black.png"
+                            content="date"
+                            className="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
+                          />
+                        </div>
+                      )}
                     </div>
                   </TableData>
                   <TableData className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
