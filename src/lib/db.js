@@ -12,3 +12,10 @@ export async function fetchCategories() {
     return data;
   }
 }
+
+export async function deactivateCategory(categoryId) {
+  const {} = await supabase
+    .from("categories")
+    .update({ is_active: false })
+    .match({ id: categoryId });
+}

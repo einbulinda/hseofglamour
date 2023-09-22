@@ -1,9 +1,9 @@
 "use client";
 import Button from "@/base-components/Button";
-import { Dialog, Panel } from "@/base-components/Dialog";
 import { FormInput } from "@/base-components/Form";
 import Menu from "@/base-components/Headless/Menu";
 import Lucide from "@/base-components/Lucide";
+import ConfirmDeleteModal from "@/base-components/Modals/ConfirmDelete";
 import {
   Table,
   TableBody,
@@ -13,16 +13,26 @@ import {
   TableRow,
 } from "@/base-components/Table";
 import Tippy from "@/base-components/Tippy";
-import { fetchCategories } from "@/lib/db";
+import { deactivateCategory, fetchCategories } from "@/lib/db";
 import { isArrayWithElements } from "@/utils/helper";
 import clsx from "clsx";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
-  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
-  const deleteButtonRef = useRef(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const openDeleteModal = (category) => {
+    setSelectedCategory(category);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setSelectedCategory(null);
+    setIsDeleteModalOpen(false);
+  };
 
   useEffect(() => {
     fetchCategories()
@@ -114,9 +124,6 @@ const CategoriesList = () => {
                               <Tippy
                                 as="img"
                                 alt={imageUrl}
-                                // alt={imageUrl.substring(
-                                //   imageUrl.lastIndexOf("/") + 1
-                                // )}
                                 src={imageUrl}
                                 className="rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
                               />
@@ -176,7 +183,7 @@ const CategoriesList = () => {
                         href="#"
                         onClick={(event) => {
                           event.preventDefault();
-                          setDeleteConfirmationModal(true);
+                          openDeleteModal(category.id);
                         }}
                       >
                         <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
@@ -192,44 +199,12 @@ const CategoriesList = () => {
       </div>
 
       {/* BEGIN:Delete Confirmation Modal */}
-      <Dialog
-        open={deleteConfirmationModal}
-        onClose={() => setDeleteConfirmationModal(false)}
-        initialFocus={deleteButtonRef}
-      >
-        <Panel>
-          <div className="p-5 text-center">
-            <Lucide
-              icon="XCircle"
-              className="w-16 h-16 mx-auto mt-3 text-danger"
-            />
-            <div className="mt-5 text-3xl">Are you sure?</div>
-            <div className="mt-2 text-slate-500">
-              Do you want to delete this record? <br />
-              The record will not be displayed in the application.
-            </div>
-          </div>
-
-          <div className="px-5 pb-8 text-center">
-            <Button
-              variant="outline-secondary"
-              type="button"
-              onClick={() => setDeleteConfirmationModal(false)}
-              className="w-24 mr-1"
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              type="button"
-              className="w-24"
-              ref={deleteButtonRef}
-            >
-              Delete
-            </Button>
-          </div>
-        </Panel>
-      </Dialog>
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={deactivateCategory}
+        itemData={selectedCategory}
+      />
       {/* END:Delete Confirmation Modal */}
     </>
   );
