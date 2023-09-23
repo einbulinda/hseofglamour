@@ -4,7 +4,7 @@ import Lucide from "../Lucide";
 import Button from "../Button";
 import { useRef } from "react";
 
-const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, itemData }) => {
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, data }) => {
   const deleteButtonRef = useRef(null);
 
   return (
@@ -37,7 +37,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, itemData }) => {
             className="w-24"
             ref={deleteButtonRef}
             onClick={() => {
-              onConfirm(itemData);
+              onConfirm(data);
               onClose();
             }}
           >

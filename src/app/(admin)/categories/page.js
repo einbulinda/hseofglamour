@@ -4,6 +4,7 @@ import { FormInput } from "@/base-components/Form";
 import Menu from "@/base-components/Headless/Menu";
 import Lucide from "@/base-components/Lucide";
 import ConfirmDeleteModal from "@/base-components/Modals/ConfirmDelete";
+import EditCategoryModal from "@/base-components/Modals/EditCategoryModal";
 import {
   Table,
   TableBody,
@@ -22,6 +23,7 @@ import { useEffect, useState } from "react";
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModelOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const openDeleteModal = (category) => {
@@ -29,9 +31,19 @@ const CategoriesList = () => {
     setIsDeleteModalOpen(true);
   };
 
+  const openEditModal = (category) => {
+    setSelectedCategory(category);
+    setIsEditModelOpen(true);
+  };
+
   const closeDeleteModal = () => {
     setSelectedCategory(null);
     setIsDeleteModalOpen(false);
+  };
+
+  const closeEditModal = () => {
+    setSelectedCategory(null);
+    setIsEditModelOpen(false);
   };
 
   useEffect(() => {
@@ -174,7 +186,14 @@ const CategoriesList = () => {
                   </TableData>
                   <TableData className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                     <div className="flex items-center justify-center">
-                      <Link className="flex items-center mr-3" href="">
+                      <Link
+                        className="flex items-center mr-3"
+                        href="#"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          openEditModal(category);
+                        }}
+                      >
                         <Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />
                         Edit
                       </Link>
@@ -183,7 +202,7 @@ const CategoriesList = () => {
                         href="#"
                         onClick={(event) => {
                           event.preventDefault();
-                          openDeleteModal(category.id);
+                          openDeleteModal(category);
                         }}
                       >
                         <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
@@ -203,9 +222,18 @@ const CategoriesList = () => {
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={deactivateCategory}
-        itemData={selectedCategory}
+        data={selectedCategory?.id}
       />
       {/* END:Delete Confirmation Modal */}
+
+      {/* BEGIN: Editing Category Modal */}
+      <EditCategoryModal
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        onConfirm={(v) => console.log(v)}
+        data={selectedCategory}
+      />
+      {/* END: Editing Category Modal */}
     </>
   );
 };

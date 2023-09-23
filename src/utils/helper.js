@@ -60,7 +60,7 @@ const slideDown = (el, duration, callback = (el) => {}) => {
 
 const generateSlug = (str) =>
   str
-    .replace(/[^\w\s-]/g, "") // remove special characters
+    ?.replace(/[^\w\s-]/g, "") // remove special characters
     .trim() // trim leading and trailing spaces
     .replace(/\s+/g, "-") //replace space with dashes
     .toLowerCase(); //convert to lowercase
